@@ -5,8 +5,11 @@ import { useState } from "react"
 
 export default function LoadMore() {
 
+    //? State to track if data is currently being fetched
     const [loading, setLoading] = useState(false)
+    //? State to store the fetched products
     const [productsData, setProductsData] = useState([])
+    //? State to track how many times "Load More" is triggered
     const [count, setCount] = useState(0)
 
     async function fetchProducts(){
