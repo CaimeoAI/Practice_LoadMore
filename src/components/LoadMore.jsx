@@ -14,13 +14,18 @@ export default function LoadMore() {
 
     async function fetchProducts(){
         try {
-            
+            setLoading(true)
             //? Fetches 20 products, skipping previous ones based on count
             const response = await fetch(`https://dummyjson.com/products?limit=20&skip=${count === 0 ? 0 : count * 20}`)
             //? Converts the response into JSON format
             const result = await response.json()
 
-            console.log(res)
+            if(result && result.products && result.products.length) {
+                setProductsData(result.products)
+                setLoading(false)
+            }
+
+            console.log(result)
 
         } catch(e) {
             console.log(e)
