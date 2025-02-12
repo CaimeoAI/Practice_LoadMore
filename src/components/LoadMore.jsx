@@ -29,6 +29,7 @@ export default function LoadMore() {
 
         } catch(e) {
             console.log(e)
+            setLoading(false)
         }
     }
 
@@ -36,6 +37,10 @@ export default function LoadMore() {
     useEffect(() => {
         fetchProducts()
     },[])
+
+    if(loading) {
+        return <div>Loading data...</div>
+    }
 
     return (
         <div className="loadmore-wrapper">
