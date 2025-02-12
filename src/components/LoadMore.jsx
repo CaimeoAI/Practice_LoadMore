@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { useState } from "react"
-
-
+import "../css/Loadmore.css"
 
 export default function LoadMore() {
 
@@ -44,7 +43,22 @@ export default function LoadMore() {
 
     return (
         <div className="loadmore-wrapper">
-            
+            <div className="products-container">
+                {
+                    productsData && productsData.length ?
+                    productsData.map(item => 
+                        <div key={item.id} className="item-container">
+                            <img src={item.images} alt={item.title} />
+                            <h3>{item.title}</h3>
+                            <p>{item.description}</p>
+                        </div>
+                    )
+
+                    :
+
+                    null
+                }
+            </div>
         </div>
     )
 }
