@@ -59,6 +59,9 @@ export default function LoadMore() {
                     null
                 }
             </div>
+            <div className="button-container">
+                <button>LOAD MORE</button>
+            </div>
         </div>
     )
 }
