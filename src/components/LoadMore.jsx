@@ -16,11 +16,12 @@ export default function LoadMore() {
     async function fetchProducts(){
         try {
             setLoading(true)
-            //? Fetches 20 products, skipping previous ones based on count
+            //? Fetches 20 products, skipping previous ones based on count value
             const response = await fetch(`https://dummyjson.com/products?limit=20&skip=${count === 0 ? 0 : count * 20}`)
             //? Converts the response into JSON format
             const result = await response.json()
 
+            //? If the result contains products, add them to the existing state
             if(result && result.products && result.products.length) {
                 setProductsData((prevData)=> [...prevData, ...result.products])
                 setLoading(false)
@@ -34,21 +35,24 @@ export default function LoadMore() {
         }
     }
 
-    //? Runs fetchProducts when the component first mounts
+    //? Runs fetchProducts when the component first mounts or when count changes
     useEffect(() => {
         fetchProducts()
     },[count])
 
+    //? Disables the "Load More" button once 100 products are loaded
     useEffect(() => {
         if (productsData && productsData.length === 100) {
             setDisableButton(true)
         }
     },[productsData])
 
+    //? Display a loading message while fetching data
     if(loading) {
         return <div>Loading data...</div>
     }
 
+    //? Function to increase count when "Load More" button is clicked
     function handleLoadMore() {
         setCount(count+1)
     }
