@@ -10,6 +10,8 @@ export default function LoadMore() {
     const [productsData, setProductsData] = useState([])
     //? State to track how many times "Load More" is triggered
     const [count, setCount] = useState(0)
+    //? State to disable button when item count reaches a certain number set in a useEffect below
+    const [disableButton, setDisableButton] = useState(false)
 
     async function fetchProducts(){
         try {
@@ -37,6 +39,12 @@ export default function LoadMore() {
         fetchProducts()
     },[count])
 
+    useEffect(() => {
+        if (productsData && productsData.length === 100) {
+            setDisableButton(true)
+        }
+    },[productsData])
+
     if(loading) {
         return <div>Loading data...</div>
     }
@@ -57,14 +65,12 @@ export default function LoadMore() {
                             <p>{item.description}</p>
                         </div>
                     )
-
                     :
-
                     null
                 }
             </div>
             <div className="button-container">
-                <button onClick={() => handleLoadMore()}>LOAD MORE</button>
+                    <button disabled={disableButton} onClick={() => handleLoadMore()}>LOAD MORE</button>
             </div>
         </div>
     )
