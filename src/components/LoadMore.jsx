@@ -20,7 +20,7 @@ export default function LoadMore() {
             const result = await response.json()
 
             if(result && result.products && result.products.length) {
-                setProductsData(result.products)
+                setProductsData((prevData)=> [...prevData, ...result.products])
                 setLoading(false)
             }
 
@@ -35,10 +35,14 @@ export default function LoadMore() {
     //? Runs fetchProducts when the component first mounts
     useEffect(() => {
         fetchProducts()
-    },[])
+    },[count])
 
     if(loading) {
         return <div>Loading data...</div>
+    }
+
+    function handleLoadMore() {
+        setCount(count+1)
     }
 
     return (
@@ -60,7 +64,7 @@ export default function LoadMore() {
                 }
             </div>
             <div className="button-container">
-                <button>LOAD MORE</button>
+                <button onClick={() => handleLoadMore()}>LOAD MORE</button>
             </div>
         </div>
     )
